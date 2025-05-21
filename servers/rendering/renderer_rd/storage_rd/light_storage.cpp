@@ -1497,25 +1497,25 @@ bool LightStorage::reflection_probe_instance_begin_render(RID p_instance, RID p_
 
 	RD::get_singleton()->draw_command_begin_label("Reflection probe render");
 
-	if (LightStorage::get_singleton()->reflection_probe_get_update_mode(rpi->probe) == RS::REFLECTION_PROBE_UPDATE_ALWAYS && atlas->reflection.is_valid() && atlas->size != 256) {
-		WARN_PRINT("ReflectionProbes set to UPDATE_ALWAYS must have an atlas size of 256. Please update the atlas size in the ProjectSettings.");
-		reflection_atlas_set_size(p_reflection_atlas, 256, atlas->count);
-	}
+	//if (LightStorage::get_singleton()->reflection_probe_get_update_mode(rpi->probe) == RS::REFLECTION_PROBE_UPDATE_ALWAYS && atlas->reflection.is_valid() && atlas->size != 256) {
+	//	WARN_PRINT("ReflectionProbes set to UPDATE_ALWAYS must have an atlas size of 256. Please update the atlas size in the ProjectSettings.");
+	//	reflection_atlas_set_size(p_reflection_atlas, 256, atlas->count);
+	//}
 
-	if (LightStorage::get_singleton()->reflection_probe_get_update_mode(rpi->probe) == RS::REFLECTION_PROBE_UPDATE_ALWAYS && atlas->reflection.is_valid() && atlas->reflections[0].data.layers[0].mipmaps.size() != 8) {
-		// Invalidate reflection atlas, need to regenerate
-		RD::get_singleton()->free(atlas->reflection);
-		atlas->reflection = RID();
+	//if (LightStorage::get_singleton()->reflection_probe_get_update_mode(rpi->probe) == RS::REFLECTION_PROBE_UPDATE_ALWAYS && atlas->reflection.is_valid() && atlas->reflections[0].data.layers[0].mipmaps.size() != 8) {
+	//	// Invalidate reflection atlas, need to regenerate
+	//	RD::get_singleton()->free(atlas->reflection);
+	//	atlas->reflection = RID();
 
-		for (int i = 0; i < atlas->reflections.size(); i++) {
-			if (atlas->reflections[i].owner.is_null()) {
-				continue;
-			}
-			reflection_probe_release_atlas_index(atlas->reflections[i].owner);
-		}
+	//	for (int i = 0; i < atlas->reflections.size(); i++) {
+	//		if (atlas->reflections[i].owner.is_null()) {
+	//			continue;
+	//		}
+	//		reflection_probe_release_atlas_index(atlas->reflections[i].owner);
+	//	}
 
-		atlas->reflections.clear();
-	}
+	//	atlas->reflections.clear();
+	//}
 
 	if (atlas->reflection.is_null()) {
 		int mipmaps = MIN(RendererSceneRenderRD::get_singleton()->get_sky()->roughness_layers, Image::get_image_required_mipmaps(atlas->size, atlas->size, Image::FORMAT_RGBAH) + 1);
